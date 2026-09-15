@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "WAN Failover Monitor",
+        "description": "Connect to a device publishing WAN failover status over MQTT. See the integration's README for the exact topic contract a publisher must follow.",
+        "data": {
+          "name": "Device name",
+          "topic_prefix": "MQTT topic prefix",
+          "enable_cellular": "Enable cellular status sensors"
+        }
+      }
+    },
+    "error": {
+      "invalid_prefix": "Topic prefix cannot be empty"
+    },
+    "abort": {
+      "already_configured": "A device with this topic prefix is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "enable_cellular": "Enable cellular status sensors"
+        }
+      }
+    }
+  }
+}
