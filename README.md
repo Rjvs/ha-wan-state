@@ -55,11 +55,21 @@ With cellular status sensors enabled, also:
 | `<prefix>/cellular/ppp_status` | free-form string | `sensor` — Cellular PPP Status |
 | `<prefix>/cellular/wan_ip` | IP address string | `sensor` — Cellular WAN IP |
 | `<prefix>/cellular/imei` | string | `sensor`, `entity_category: diagnostic` — Cellular IMEI |
+| `<prefix>/cellular/data_plantype` | free-form string | `sensor`, `entity_category: diagnostic` — Cellular Data Plan Type |
+| `<prefix>/cellular/data_allotted` | number (unit unspecified — MB/GB depends on carrier) | `sensor` — Cellular Data Allotted |
+| `<prefix>/cellular/data_used` | number (same unit as allotted) | `sensor` — Cellular Data Used |
+| `<prefix>/cellular/data_remaining` | number (same unit as allotted) | `sensor` — Cellular Data Remaining |
+| `<prefix>/cellular/data_remaining_days` | number | `sensor`, unit `d` — Cellular Data Remaining Days |
+| `<prefix>/cellular/data_remaining_percent` | number | `sensor`, unit `%` — Cellular Data Remaining Percent |
+| `<prefix>/cellular/data_lowbalance` | `ON` or `OFF` | `binary_sensor`, `device_class: problem`, `entity_category: diagnostic` — Cellular Data Low Balance |
 
 An empty payload on any topic is treated as "no data yet" (entity state
 `unknown`), not an error — useful for a publisher that hasn't completed
 its first cycle, or a status field that's genuinely inapplicable right
-now (e.g. a signal reading before the radio has associated).
+now (e.g. a signal reading before the radio has associated, or carrier
+billing data that hasn't synced to the device yet — a publisher may
+choose to simply not publish the `data_*` topics until it has a
+confirmed sync, so entities hold their last-known value instead).
 
 All entities from one config entry group under a single HA device, named
 whatever you set as "Device name" during setup.

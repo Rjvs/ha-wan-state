@@ -9,10 +9,16 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntityDescription,
 )
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import TOPIC_CELLULAR_UPLINK, TOPIC_PRIMARY_UPLINK
+from .const import (
+    CONF_ENABLE_CELLULAR,
+    TOPIC_CELLULAR_DATA_LOWBALANCE,
+    TOPIC_CELLULAR_UPLINK,
+    TOPIC_PRIMARY_UPLINK,
+)
 from .entity import WanFailoverMqttEntity
 
 
@@ -21,6 +27,7 @@ class WanFailoverBinarySensorDescription(BinarySensorEntityDescription):
     """Describes one MQTT-backed binary sensor."""
 
     topic_suffix: str = ""
+    cellular: bool = False
 
 
 BINARY_SENSOR_DESCRIPTIONS: tuple[WanFailoverBinarySensorDescription, ...] = (
@@ -36,6 +43,14 @@ BINARY_SENSOR_DESCRIPTIONS: tuple[WanFailoverBinarySensorDescription, ...] = (
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
         topic_suffix=TOPIC_CELLULAR_UPLINK,
     ),
+    WanFailoverBinarySensorDescription(
+        key="cellular_data_lowbalance",
+        name="Cellular Data Low Balance",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        topic_suffix=TOPIC_CELLULAR_DATA_LOWBALANCE,
+        cellular=True,
+    ),
 )
 
 
@@ -43,9 +58,13 @@ async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up binary sensors for a config entry."""
+    enable_cellular = entry.options.get(
+        CONF_ENABLE_CELLULAR, entry.data.get(CONF_ENABLE_CELLULAR, True)
+    )
     async_add_entities(
         WanFailoverBinarySensor(hass, entry, description)
         for description in BINARY_SENSOR_DESCRIPTIONS
+        if enable_cellular or not description.cellular
     )
 
 
