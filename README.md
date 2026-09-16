@@ -56,10 +56,10 @@ With cellular status sensors enabled, also:
 | `<prefix>/cellular/wan_ip` | IP address string | `sensor` — Cellular WAN IP |
 | `<prefix>/cellular/imei` | string | `sensor`, `entity_category: diagnostic` — Cellular IMEI |
 | `<prefix>/cellular/data_plantype` | free-form string | `sensor`, `entity_category: diagnostic` — Cellular Data Plan Type |
-| `<prefix>/cellular/data_allotted` | number (unit unspecified — MB/GB depends on carrier) | `sensor` — Cellular Data Allotted |
-| `<prefix>/cellular/data_used` | number (same unit as allotted) | `sensor` — Cellular Data Used |
-| `<prefix>/cellular/data_remaining` | number (same unit as allotted) | `sensor` — Cellular Data Remaining |
-| `<prefix>/cellular/data_remaining_days` | number | `sensor`, unit `d` — Cellular Data Remaining Days |
+| `<prefix>/cellular/data_allotted` | number, bytes | `sensor`, `device_class: data_size`, unit bytes — Cellular Data Allotted |
+| `<prefix>/cellular/data_used` | number, bytes | `sensor`, `device_class: data_size`, unit bytes — Cellular Data Used |
+| `<prefix>/cellular/data_remaining` | number, bytes | `sensor`, `device_class: data_size`, unit bytes — Cellular Data Remaining |
+| `<prefix>/cellular/data_remaining_days` | number | `sensor`, `device_class: duration`, unit `d` — Cellular Data Remaining Days |
 | `<prefix>/cellular/data_remaining_percent` | number | `sensor`, unit `%` — Cellular Data Remaining Percent |
 | `<prefix>/cellular/data_lowbalance` | `ON` or `OFF` | `binary_sensor`, `device_class: problem`, `entity_category: diagnostic` — Cellular Data Low Balance |
 
