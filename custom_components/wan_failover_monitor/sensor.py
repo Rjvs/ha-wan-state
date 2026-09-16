@@ -10,7 +10,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import EntityCategory
+from homeassistant.const import EntityCategory, UnitOfInformation
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt as dt_util
@@ -113,7 +113,9 @@ SENSOR_DESCRIPTIONS: tuple[WanFailoverSensorDescription, ...] = (
         key="cellular_data_allotted",
         name="Cellular Data Allotted",
         icon="mdi:database",
+        device_class=SensorDeviceClass.DATA_SIZE,
         state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=UnitOfInformation.BYTES,
         topic_suffix=TOPIC_CELLULAR_DATA_ALLOTTED,
         cellular=True,
     ),
@@ -121,7 +123,9 @@ SENSOR_DESCRIPTIONS: tuple[WanFailoverSensorDescription, ...] = (
         key="cellular_data_used",
         name="Cellular Data Used",
         icon="mdi:database-arrow-up",
+        device_class=SensorDeviceClass.DATA_SIZE,
         state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=UnitOfInformation.BYTES,
         topic_suffix=TOPIC_CELLULAR_DATA_USED,
         cellular=True,
     ),
@@ -129,7 +133,9 @@ SENSOR_DESCRIPTIONS: tuple[WanFailoverSensorDescription, ...] = (
         key="cellular_data_remaining",
         name="Cellular Data Remaining",
         icon="mdi:database-arrow-down",
+        device_class=SensorDeviceClass.DATA_SIZE,
         state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=UnitOfInformation.BYTES,
         topic_suffix=TOPIC_CELLULAR_DATA_REMAINING,
         cellular=True,
     ),
@@ -137,6 +143,7 @@ SENSOR_DESCRIPTIONS: tuple[WanFailoverSensorDescription, ...] = (
         key="cellular_data_remaining_days",
         name="Cellular Data Remaining Days",
         icon="mdi:calendar-clock",
+        device_class=SensorDeviceClass.DURATION,
         state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement="d",
         topic_suffix=TOPIC_CELLULAR_DATA_REMAINING_DAYS,
